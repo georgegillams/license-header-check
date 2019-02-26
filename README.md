@@ -10,8 +10,8 @@ npx license-header-check
 or
 
 ```js
-npm i -g terminal-parrot
-terminal-parrot
+npm i -g license-header-check
+license-header-check
 ```
 ## Arguments
 | name       | default |

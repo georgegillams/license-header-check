@@ -1,5 +1,8 @@
 # Changelog
 
+ - 1.0.10
+   - README.md updates
+
  - 1.0.9
    - Only write a file if a fix has been applied, otherwise image files etc are modified inadvertently
 
