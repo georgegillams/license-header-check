@@ -3,7 +3,8 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
-const errors = [];
+const yearErrors = [];
+const presenceErrors = [];
 const endYear = 1900 + new Date().getYear();
 const startYear = process.env.START_YEAR || endYear;
 const orgName = process.env.ORG_NAME;
@@ -19,6 +20,7 @@ function checkCopyrightYear (codeFile, fix) {
       return;
     }
     let newFileData = [];
+    let licensePresent = false;
     let fixApplied = false;
     fs.readFile(codeFile, 'utf8', (err, data) => {
       if (err) {
@@ -31,23 +33,25 @@ function checkCopyrightYear (codeFile, fix) {
       }
       const fileLines = data.split('\n');
       for (let i = 0; i < fileLines.length; i += 1) {
-        const lineMatch = fileLines[i].match(/(.*)Copyright\s+[0-9\-\s]*\s+.*/);
+        const lineMatch = fileLines[i].match(/(.*)Copyright\s+[0-9\-\s]*.*/);
         if (!lineMatch) {
           newFileData.push(fileLines[i]);
           continue;
         }
-        const correctString = `${lineMatch[1]}Copyright ${startYear !== endYear &&
-          `${startYear}-`}${endYear}${orgName && ` ${orgName}`}`;
+        licensePresent = true;
+        const correctString = `${lineMatch[1]}Copyright 2012-2019 YO
+          `${startYear}-` : ''}${endYear}${orgName ? ` ${orgName}` : ''}`;
         const yearValid = fileLines[i] === correctString;
-        if (yearValid) {
-          resolve(null);
-          return;
+        if (!yearValid) {
+          yearErrors.push({ codeFile });
+          if (fix) {
+            newFileData.push(correctString);
+            fixApplied = true;
+          }
         }
-        errors.push({ codeFile });
-        if (fix) {
-          newFileData.push(correctString);
-          fixApplied = true;
-        }
+      }
+      if (!licensePresent) {
+        presenceErrors.push({codeFile})
       }
       if (fix && fixApplied) {
         fs.writeFile(codeFile, newFileData.join('\n'), 'utf8', err2 => {
@@ -59,8 +63,32 @@ function checkCopyrightYear (codeFile, fix) {
   });
 }
 
+function printYearErrors () {
+  if(yearErrors.length < 1){
+    return;
+  }
+
+  console.log('Some copyright headers are wrong  😱');
+  console.log('');
+  yearErrors.forEach(yearErrors => {
+    console.log(yearErrors.codeFile);
+  });
+}
+
+function printPresenceErrors () {
+  if(presenceErrors.length < 1){
+    return;
+  }
+
+  console.log('Some copyright headers are missing  😱');
+  console.log('');
+  presenceErrors.forEach(presenceErrors => {
+    console.log(presenceErrors.codeFile);
+  });
+}
+
 function thing () {
-  console.log('Checking copyright header years...');
+  console.log('Checking copyright headers...');
   console.log('');
 
   let codeFiles = execSync('find * | grep -v node_modules')
@@ -75,23 +103,20 @@ function thing () {
 
   Promise.all(checks)
     .then(() => {
-      if (errors.length === 0) {
+      if (yearErrors.length + presenceErrors.length === 0) {
         console.log('All good.  👍');
       } else if (shouldFix) {
         console.log('\nAll fixed.  👍\n\n');
       } else {
-        console.log('Some copyright headers are wrong  😱');
-        console.log('');
-        errors.forEach(error => {
-          console.log(error.codeFile);
-        });
+        printYearErrors();
+        printPresenceErrors();
         console.log('');
         process.exit(1);
       }
       console.log('');
     })
     .catch(() => {
-      console.log(`some errors happened`);
+      console.log(`some yearErrors happened`);
     });
 }
 
