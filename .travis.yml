@@ -1,0 +1,16 @@
+language: node_js
+
+env:
+  global:
+    - NPM_CONFIG_LOGLEVEL=warn
+
+install:
+  - npm install
+
+script:
+  - npm test
+
+cache:
+  directories:
+    - node_modules
+
