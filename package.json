@@ -2,14 +2,15 @@
   "name": "license-header-check",
   "version": "1.0.10",
   "bin": {
-    "license-header-check": "dist/index.js",
-    "licenseheadercheck": "dist/index.js"
+    "license-header-check": "dist/cli.js",
+    "licenseheadercheck": "dist/cli.js"
   },
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/cli.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0",
-    "prepublish": "NODE_ENV=development babel -d ./dist ./src -s"
+    "test": "DATE='01-01-2019T00:00:00Z' npm run build && jest",
+    "build": "NODE_ENV=development babel -d ./dist ./src -s",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,8 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.3",
-    "@babel/preset-env": "^7.3.1"
+    "@babel/preset-env": "^7.3.1",
+    "jest": "^24.1.0"
   },
   "dependencies": {}
 }
