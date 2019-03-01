@@ -19,8 +19,11 @@ function consistencise (output) {
 }
 
 function gitDiff(dir1, dir2) {
-  const gitDiffResult = spawnSync(`git`, [`diff`, dir1, dir2]);
-  return gitDiffResult.output.toString(`utf8`);
+  const diffResult = spawnSync(`diff`, [`-q`, `${path.join(dir1, '')}`, `${path.join(dir2, '')}`], {
+    encoding: 'utf-8'
+  });
+
+  return diffResult.stdout;
 }
 
 module.exports.consistencise = consistencise;
