@@ -1,6 +1,6 @@
 {
   "name": "license-header-check",
-  "version": "1.0.10",
+  "version": "2.0.0",
   "bin": {
     "license-header-check": "dist/cli.js",
     "licenseheadercheck": "dist/cli.js"

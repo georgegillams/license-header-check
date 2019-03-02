@@ -25,13 +25,19 @@ function checkCopyrightYear (codeFile, startYear, endYear, orgName, shouldFix) {
       }
       const fileLines = data.split('\n');
       for (let i = 0; i < fileLines.length; i += 1) {
-        const lineMatch = fileLines[i].match(/(.*)Copyright\s+[0-9\-\s]*\s+.*/);
+        const lineMatch = fileLines[i].match(/(.*)Copyright\s+[0-9\-\s]*.*/);
         if (!lineMatch) {
           newFileData.push(fileLines[i]);
           continue;
         }
-        const correctString = `${lineMatch[1]}Copyright ${startYear !== endYear ?
-          `${startYear}-` : ''}${endYear}${orgName ? ` ${orgName}` : ''}`;
+        const correctString = `${lineMatch[1]}Copyright `;
+        if(startYear !== endYear){
+          correctString += `${startYear}-`;
+        }
+        correctString += `${endYear}`;
+        if(orgName){
+          correctString += ` ${orgName}`;
+        }
         const yearValid = fileLines[i] === correctString;
         if (yearValid) {
           resolve(null);
@@ -47,10 +53,14 @@ function checkCopyrightYear (codeFile, startYear, endYear, orgName, shouldFix) {
       // We should re-write the file iff a fix has been applied, otherwise we risk leaving binary files in an unclean state 
       if (shouldFix && fixApplied) {
         fs.writeFile(codeFile, newFileData.join('\n'), 'utf8', err2 => {
-          if (err2) resolve(err2);
+          if (err2) {
+            resolve(err2);
+          }
+          resolve(null);
         });
+      } else {
+        resolve(null);
       }
-      resolve(null);
     });
   });
 }

@@ -1,6 +1,1 @@
-// Blah blah legal stuff
-// Copyright 2012-2019
-// Blah blah legal stuff
-// Blah blah legal stuff
-
 We were so excited to add this file to the repo that we completely forgot about the license header. Quelle dommage!
