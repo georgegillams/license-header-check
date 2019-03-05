@@ -74,13 +74,26 @@ function fixCopyrightYearError (error) {
   });
 }
 
+function createErrorMessage (yearErrors) {
+   let messages = [];
+   if(yearErrors.length > 0){
+     const yearErrorMessage = []
+     yearErrorMessage.push('Some copyright headers are wrong  😱');
+     yearErrors.forEach(error => {
+       yearErrorMessage.push(`\n${error.codeFile}`);
+     });
+     messages.push(yearErrorMessage.join('\n'));
+   }
+  return message.join('\n\n');
+}
+
 function performFixes (yearErrors) {
   return new Promise((resolve, reject) => {
      const fixes = yearErrors.map(err => fixCopyrightYearError(err));
 
      Promise.all(fixes)
      .then(() => {
-         const message = '\nAll fixed.  👍\n\n';
+         const message = '\nAll fixed.  👍\n';
          resolve(message); 
          return;
      })
