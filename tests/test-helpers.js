@@ -13,6 +13,9 @@ function createTempDir () {
 }
 
 function consistencise (output) {
+  if(output.split("\n\n").length > 1) {
+     return output.split("\n\n").map(s => consistencise(s)).join(" || ");
+  }
   let s = output.replace(/(\r\n|\n|\r)/gm, "SPLIT_HERE")
   s = s.split("SPLIT_HERE").filter(s => s !== '')
   return s.sort().join(" ")
