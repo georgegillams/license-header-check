@@ -1,4 +1,4 @@
-# License Header Checker
+# [License Header Checker](https://www.npmjs.com/license-header-check)
 
 Checks the year in your license header is up to date.
 
