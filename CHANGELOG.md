@@ -1,5 +1,10 @@
 # Changelog
 
+ - 2.1.0
+   - Major refactoring
+   - Improved message output
+   - Ability to update test snapshots automatically
+
  - 2.0.0
    - Overhaul of internal workings following the addition of tests. Can't promise it won't break stuff, hence a new major version
 
