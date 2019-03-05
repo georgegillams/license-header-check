@@ -22,6 +22,10 @@ function consistencise (output) {
 }
 
 function gitDiff(dir1, dir2) {
+  if(process.env.UPDATE_SNAPSHOTS) {
+    execSync(`cp -R ${path.join(dir1, '*')} ${dir2}`);
+  }
+
   const diffResult = spawnSync(`diff`, [`-q`, `${path.join(dir1, '')}`, `${path.join(dir2, '')}`], {
     encoding: 'utf-8'
   });
