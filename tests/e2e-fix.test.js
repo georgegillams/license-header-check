@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
+const { execSync } = require('child_process');
 const runProcess = require('../dist/lib.js');
 const {gitDiff, consistencise, createTempDir} = require('./test-helpers.js');
 
