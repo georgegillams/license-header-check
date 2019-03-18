@@ -13,11 +13,16 @@ or
 npm i -g license-header-check
 license-header-check
 ```
+
+The tool will prompt you for all the information it needs. If you want to integrate it into your CI, you can use silent mode which only takes CLI arguments.
+
 ## Arguments
-| name       | default |
-| ----       | ------- |
-| START_YEAR | 2016    |
-| ORG_NAME   | null    |
+| name                    | default |
+| ----------------------- | ------- |
+| `--silent` or `-s`      | false   |
+| `--fix` or `-f`         | false   |
+| `--orgName` or `-o`     | null    |
+| `--startYear` or `-s`   | null    |
 
 ## Testing
 

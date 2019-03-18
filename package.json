@@ -1,6 +1,6 @@
 {
   "name": "license-header-check",
-  "version": "2.1.0",
+  "version": "3.1.0",
   "bin": {
     "license-header-check": "dist/cli.js",
     "licenseheadercheck": "dist/cli.js"
@@ -29,5 +29,7 @@
     "jest": "^24.1.0",
     "release-it": "^10.2.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "prompt": "^1.0.0"
+  }
 }
