@@ -29,5 +29,7 @@
     "jest": "^24.1.0",
     "release-it": "^10.2.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "prompt": "^1.0.0"
+  }
 }
