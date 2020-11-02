@@ -27,7 +27,7 @@
     "@babel/core": "^7.3.3",
     "@babel/preset-env": "^7.3.1",
     "jest": "^24.1.0",
-    "release-it": "^10.4.5"
+    "release-it": "^14.2.1"
   },
   "dependencies": {
     "prompt": "^1.0.0"
